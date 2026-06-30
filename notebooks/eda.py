@@ -24,3 +24,6 @@ print(mean_sales)
 
 store_sales=df.groupby('Store')['Weekly_Sales'].sum().sort_values(ascending=False)
 print(store_sales.head(5))
+
+dept_sales=df.groupby('Dept')['Weekly_Sales'].sum().sort_values(ascending=False)
+print(dept_sales.head(5))
