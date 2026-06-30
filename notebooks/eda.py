@@ -1,3 +1,4 @@
+from prophet import Prophet
 import pandas as pd 
 import matplotlib.pyplot as plt
 
@@ -40,3 +41,20 @@ train_data = df['Date'] < '2012-06-01'
 print("Train data shape:", df[train_data].shape)
 test_data = df['Date'] >= '2012-06-01'
 print("Test data shape:", df[test_data].shape)
+
+prophet_df = sales_by_date.reset_index().rename(columns={'Date': 'ds', 'Weekly_Sales': 'y'})
+print(prophet_df.head())
+
+model=Prophet()
+model.fit(prophet_df)
+
+future = model.make_future_dataframe(periods=12, freq='W')
+forecast = model.predict(future)
+print(forecast[['ds','yhat','yhat_lower','yhat_upper']].tail(12))
+
+model.plot(forecast)
+plt.title('Prophet Forecast of Weekly Sales')
+plt.xlabel('Date')
+plt.ylabel('Weekly Sales')
+plt.savefig('../outputs/prophet_forecast.png')
+plt.show()
