@@ -27,3 +27,8 @@ print(store_sales.head(5))
 
 dept_sales=df.groupby('Dept')['Weekly_Sales'].sum().sort_values(ascending=False)
 print(dept_sales.head(5))
+
+df['Year'] = df['Date'].dt.year
+df['Month'] = df['Date'].dt.month  
+df['Week'] = df['Date'].dt.isocalendar().week
+print(df[['Date','Year','Month','Week']].head())
