@@ -21,3 +21,6 @@ plt.show()
 
 mean_sales = df.groupby('IsHoliday')['Weekly_Sales'].mean()
 print(mean_sales)
+
+store_sales=df.groupby('Store')['Weekly_Sales'].sum().sort_values(ascending=False)
+print(store_sales.head(5))
