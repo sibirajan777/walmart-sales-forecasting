@@ -32,3 +32,6 @@ df['Year'] = df['Date'].dt.year
 df['Month'] = df['Date'].dt.month  
 df['Week'] = df['Date'].dt.isocalendar().week
 print(df[['Date','Year','Month','Week']].head())
+
+df['IsHoliday'] = df['IsHoliday'].astype(int)
+print(df['IsHoliday'].head())
