@@ -1,4 +1,6 @@
 from prophet import Prophet
+from sklearn.metrics import mean_absolute_error, mean_squared_error
+import numpy as np
 import pandas as pd 
 import matplotlib.pyplot as plt
 
@@ -58,3 +60,16 @@ plt.xlabel('Date')
 plt.ylabel('Weekly Sales')
 plt.savefig('../outputs/prophet_forecast.png')
 plt.show()
+
+test_sales = sales_by_date[sales_by_date.index >= '2012-06-01']
+
+forecast_indexed = forecast.set_index('ds')['yhat']
+predicted = forecast_indexed[test_sales.index]
+
+mae = mean_absolute_error(test_sales, predicted)
+rmse = np.sqrt(mean_squared_error(test_sales, predicted))
+mape = np.mean(np.abs((test_sales - predicted) / test_sales)) * 100
+
+print(f"MAE  : {mae:,.2f}")
+print(f"RMSE : {rmse:,.2f}")
+print(f"MAPE : {mape:.2f}%")
